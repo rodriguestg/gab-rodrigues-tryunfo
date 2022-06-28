@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+    };
+  }
+
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
@@ -16,7 +22,7 @@ class Form extends React.Component {
             id="nameCart"
             data-testid="name-input"
             type="text"
-            name="name-cart"
+            name="nameCart"
           />
         </label>
         <label htmlFor="descriptionCart">
@@ -27,7 +33,7 @@ class Form extends React.Component {
             id="descriptionCart"
             data-testid="description-input"
             type="textarea"
-            name="description-Cart"
+            name="description"
           />
         </label>
         <label htmlFor="power">
@@ -38,7 +44,7 @@ class Form extends React.Component {
             id="power"
             data-testid="attr1-input"
             type="number"
-            name="power-cart"
+            name="power"
           />
         </label>
         <label htmlFor="stamina">
@@ -49,7 +55,7 @@ class Form extends React.Component {
             id="stamina"
             data-testid="attr2-input"
             type="number"
-            name="stamina-cart"
+            name="stamina"
           />
         </label>
         <label htmlFor="defense">
@@ -60,7 +66,7 @@ class Form extends React.Component {
             id="defense"
             data-testid="attr3-input"
             type="number"
-            name="defense-cart"
+            name="defense"
           />
         </label>
         <label htmlFor="imageCart">
@@ -71,13 +77,13 @@ class Form extends React.Component {
             id="imageCart"
             data-testid="image-input"
             type="text"
-            name="image-cart"
+            name="imageCart"
           />
         </label>
         <label htmlFor="raridade">
           Quão raro é sua carta?
           <select
-            name="raridade-cart"
+            name="raridade"
             onChange={ onInputChange }
             id="raridade"
             data-testid="rare-input"
@@ -97,7 +103,7 @@ class Form extends React.Component {
             id="superTrunfo"
             data-testid="trunfo-input"
             type="checkbox"
-            name="super-trunfo"
+            name="trunfo"
           />
         </label>
         <button
