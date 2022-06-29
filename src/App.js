@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import CardsBox from './components/CardsBox';
 
 class App extends React.Component {
   constructor() {
@@ -15,6 +16,7 @@ class App extends React.Component {
       raridade: '',
       trunfo: false,
       boxCart: [],
+      checkTrunfo: false,
     };
   }
 
@@ -25,7 +27,6 @@ class App extends React.Component {
     this.setState({
       [name]: valueResult,
     });
-    console.log(name);
   };
 
   buttonState = () => {
@@ -53,7 +54,6 @@ class App extends React.Component {
   saveCard = () => {
     const { nameCart, imageCart, description, power,
       stamina, defense, raridade, trunfo, boxCart } = this.state;
-    // boxCart.map((cart) => ...cart, )
     this.setState({
       boxCart: [...boxCart, {
         nameCartNew: nameCart,
@@ -74,20 +74,18 @@ class App extends React.Component {
       raridade: '',
       trunfo: false,
     });
-  };
-
-  hasTrunfoVal = () => {
-    const { boxCart } = this.state;
-    const trunfo = boxCart.find((card) => card.trunfoNew === true);
-    if (!trunfo) {
-      return false;
+    if (trunfo === true) {
+      this.setState({
+        checkTrunfo: true,
+      });
     }
-    return true;
   };
 
   render() {
-    const { nameCart, imageCart, description, power,
-      stamina, defense, raridade, trunfo } = this.state;
+    const { nameCart, imageCart, description, power, stamina,
+      defense, raridade, trunfo, boxCart, checkTrunfo } = this.state;
+    const { nameCartNew, imageCartNew, descriptionNew, powerNew,
+      staminaNew, defenseNew, raridadeNew, trunfoNew } = boxCart;
     return (
       <div>
         <h1>Oi Tryunfo</h1>
@@ -103,7 +101,7 @@ class App extends React.Component {
           cardAttr3={ defense }
           cardRare={ raridade }
           cardTrunfo={ trunfo }
-          hasTrunfo={ this.hasTrunfoVal }
+          hasTrunfo={ checkTrunfo }
         />
         <Card
           cardName={ nameCart }
@@ -114,6 +112,16 @@ class App extends React.Component {
           cardAttr3={ defense }
           cardRare={ raridade }
           cardTrunfo={ trunfo }
+        />
+        <CardsBox
+          newCardName={ nameCartNew }
+          newCardImage={ imageCartNew }
+          newCardDescription={ descriptionNew }
+          newCardAttr1={ powerNew }
+          newCardAttr2={ staminaNew }
+          newCardAttr3={ defenseNew }
+          newCardRare={ raridadeNew }
+          newCardTrunfo={ trunfoNew }
         />
       </div>
     );

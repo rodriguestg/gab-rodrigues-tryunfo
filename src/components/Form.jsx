@@ -17,9 +17,8 @@ class Form extends React.Component {
           name="trunfo"
         />
       );
-      console.log(hasTrunfo());
       const noTrunfo = <p>Você já tem um Super Trunfo em seu baralho</p>;
-      return hasTrunfo() ? noTrunfo : trunfo;
+      return hasTrunfo ? noTrunfo : trunfo;
     };
 
     return (
