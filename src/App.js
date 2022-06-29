@@ -6,26 +6,47 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      nameCart: 'Nome da carta',
-      imageCart: 'url',
-      description: 'Descrição',
-      power: 0,
-      stamina: 0,
-      defense: 0,
-      raridade: 'Normal',
+      nameCart: '',
+      imageCart: '',
+      description: '',
+      power: '',
+      stamina: '',
+      defense: '',
+      raridade: '',
       trunfo: false,
     };
   }
 
   inputChange = ({ target }) => {
     const { name, type, checked, value } = target;
-    console.log(target);
+    // console.log(target);
     const valueResult = type === 'checkbox' ? checked : value;
     this.setState({
       [name]: valueResult,
     });
-    console.log(valueResult);
   };
+
+  buttonState = () => {
+    const { nameCart, imageCart, description, power,
+      stamina, defense, raridade } = this.state;
+    if (!nameCart || !imageCart || !description || !power
+      || !stamina || !defense || !raridade) {
+      return true;
+    }
+    const attrs = [power, stamina, defense];
+    const attrTotals = attrs.map((attr) => parseFloat(attr))
+      .reduce((acc, attr) => acc + attr);
+    const attrsMax = 210;
+    if (attrTotals > attrsMax) {
+      return true;
+    }
+    const maxAttr = 90;
+    const attrValidation = (...att) => parseFloat(att[0]) > maxAttr
+      || parseFloat(att[0]) < 0
+      || parseFloat(att[1]) > maxAttr || parseFloat(att[1]) < 0
+      || parseFloat(att[2]) > maxAttr || parseFloat(att[2]) < 0;
+    if (defense || stamina || power) { return attrValidation(defense, stamina, power); }
+  }
 
   render() {
     const { nameCart, imageCart, description, power,
@@ -33,7 +54,10 @@ class App extends React.Component {
     return (
       <div>
         <h1>Oi Tryunfo</h1>
-        <Form onInputChange={ this.inputChange } />
+        <Form
+          onInputChange={ this.inputChange }
+          isSaveButtonDisabled={ this.buttonState() }
+        />
         <Card
           cardName={ nameCart }
           cardImage={ imageCart }

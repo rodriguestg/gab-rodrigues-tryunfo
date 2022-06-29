@@ -7,7 +7,7 @@ class Card extends React.Component {
       cardAttr3, cardImage, cardRare, cardTrunfo } = this.props;
     const trunfoRender = () => {
       const trunfo = <p data-testid="trunfo-card">Super Trunfo</p>;
-      const noTrunfo = <p> Não é super trunfo </p>;
+      const noTrunfo = <p />;
       return cardTrunfo ? trunfo : noTrunfo;
     };
     return (
