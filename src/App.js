@@ -9,11 +9,12 @@ class App extends React.Component {
       nameCart: '',
       imageCart: '',
       description: '',
-      power: '',
-      stamina: '',
-      defense: '',
+      power: 0,
+      stamina: 0,
+      defense: 0,
       raridade: '',
       trunfo: false,
+      boxCart: [{}],
     };
   }
 
@@ -24,6 +25,7 @@ class App extends React.Component {
     this.setState({
       [name]: valueResult,
     });
+    console.log(name);
   };
 
   buttonState = () => {
@@ -48,6 +50,32 @@ class App extends React.Component {
     if (defense || stamina || power) { return attrValidation(defense, stamina, power); }
   }
 
+  saveCard = () => {
+    const { nameCart, imageCart, description, power,
+      stamina, defense, raridade, boxCart, trunfo } = this.state;
+    // boxCart.map((cart) => ...cart, )
+    this.setState({
+      boxCart: [{
+        nameCart: [nameCart],
+        imageCart: [imageCart],
+        description: [description],
+        power: [power],
+        stamina: [stamina],
+        defense: [defense],
+        raridade: [raridade],
+        trunfo: [trunfo],
+      }],
+      nameCart: '',
+      imageCart: '',
+      description: '',
+      power: 0,
+      stamina: 0,
+      defense: 0,
+      raridade: '',
+      trunfo: false,
+    });
+  };
+
   render() {
     const { nameCart, imageCart, description, power,
       stamina, defense, raridade, trunfo } = this.state;
@@ -57,6 +85,15 @@ class App extends React.Component {
         <Form
           onInputChange={ this.inputChange }
           isSaveButtonDisabled={ this.buttonState() }
+          onSaveButtonClick={ this.saveCard }
+          cardName={ nameCart }
+          cardImage={ imageCart }
+          cardDescription={ description }
+          cardAttr1={ power }
+          cardAttr2={ stamina }
+          cardAttr3={ defense }
+          cardRare={ raridade }
+          cardTrunfo={ trunfo }
         />
         <Card
           cardName={ nameCart }

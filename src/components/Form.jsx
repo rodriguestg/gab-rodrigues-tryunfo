@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 class Form extends React.Component {
   constructor() {
     super();
+    // const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+    //   cardImage, cardRare, cardTrunfo } = this.props;
     this.state = {
     };
   }
@@ -107,7 +109,7 @@ class Form extends React.Component {
           />
         </label>
         <button
-          type="submit"
+          type="button"
           id="btn-salvar"
           data-testid="save-button"
           disabled={ isSaveButtonDisabled }
