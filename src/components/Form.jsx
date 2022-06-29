@@ -2,18 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
-  constructor() {
-    super();
-    // const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-    //   cardImage, cardRare, cardTrunfo } = this.props;
-    this.state = {
-    };
-  }
-
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
-      cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
+      cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
       onSaveButtonClick, onInputChange } = this.props;
+    const trunfoLabelRender = () => {
+      const trunfo = (
+        <input
+          checked={ cardTrunfo }
+          onChange={ onInputChange }
+          id="superTrunfo"
+          data-testid="trunfo-input"
+          type="checkbox"
+          name="trunfo"
+        />
+      );
+      console.log(hasTrunfo());
+      const noTrunfo = <p>Você já tem um Super Trunfo em seu baralho</p>;
+      return hasTrunfo() ? noTrunfo : trunfo;
+    };
+
     return (
       <form>
         <label htmlFor="nameCart">
@@ -98,15 +106,8 @@ class Form extends React.Component {
           <input type="hidden" />
         </label>
         <label htmlFor="superTrunfo">
-          É uma carta Super Trunfo?
-          <input
-            checked={ cardTrunfo }
-            onChange={ onInputChange }
-            id="superTrunfo"
-            data-testid="trunfo-input"
-            type="checkbox"
-            name="trunfo"
-          />
+          É uma carta super trunfo?
+          {trunfoLabelRender()}
         </label>
         <button
           type="button"
@@ -131,7 +132,7 @@ Form.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
-  // hasTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,

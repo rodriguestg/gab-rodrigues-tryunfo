@@ -9,12 +9,12 @@ class App extends React.Component {
       nameCart: '',
       imageCart: '',
       description: '',
-      power: 0,
-      stamina: 0,
-      defense: 0,
+      power: '',
+      stamina: '',
+      defense: '',
       raridade: '',
       trunfo: false,
-      boxCart: [{}],
+      boxCart: [],
     };
   }
 
@@ -52,28 +52,37 @@ class App extends React.Component {
 
   saveCard = () => {
     const { nameCart, imageCart, description, power,
-      stamina, defense, raridade, boxCart, trunfo } = this.state;
+      stamina, defense, raridade, trunfo, boxCart } = this.state;
     // boxCart.map((cart) => ...cart, )
     this.setState({
-      boxCart: [{
-        nameCart: [nameCart],
-        imageCart: [imageCart],
-        description: [description],
-        power: [power],
-        stamina: [stamina],
-        defense: [defense],
-        raridade: [raridade],
-        trunfo: [trunfo],
+      boxCart: [...boxCart, {
+        nameCartNew: nameCart,
+        imageCartNew: imageCart,
+        descriptionNew: description,
+        powerNew: power,
+        staminaNew: stamina,
+        defenseNew: defense,
+        raridadeNew: raridade,
+        trunfoNew: trunfo,
       }],
       nameCart: '',
       imageCart: '',
       description: '',
-      power: 0,
-      stamina: 0,
-      defense: 0,
+      power: '0',
+      stamina: '0',
+      defense: '0',
       raridade: '',
       trunfo: false,
     });
+  };
+
+  hasTrunfoVal = () => {
+    const { boxCart } = this.state;
+    const trunfo = boxCart.find((card) => card.trunfoNew === true);
+    if (!trunfo) {
+      return false;
+    }
+    return true;
   };
 
   render() {
@@ -94,6 +103,7 @@ class App extends React.Component {
           cardAttr3={ defense }
           cardRare={ raridade }
           cardTrunfo={ trunfo }
+          hasTrunfo={ this.hasTrunfoVal }
         />
         <Card
           cardName={ nameCart }
