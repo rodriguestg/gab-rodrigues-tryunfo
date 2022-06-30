@@ -51,20 +51,8 @@ class App extends React.Component {
     if (defense || stamina || power) { return attrValidation(defense, stamina, power); }
   }
 
-  saveCard = () => {
-    const { nameCart, imageCart, description, power,
-      stamina, defense, raridade, trunfo, boxCart } = this.state;
+  clear = () => {
     this.setState({
-      boxCart: [...boxCart, {
-        nameCartNew: nameCart,
-        imageCartNew: imageCart,
-        descriptionNew: description,
-        powerNew: power,
-        staminaNew: stamina,
-        defenseNew: defense,
-        raridadeNew: raridade,
-        trunfoNew: trunfo,
-      }],
       nameCart: '',
       imageCart: '',
       description: '',
@@ -74,22 +62,27 @@ class App extends React.Component {
       raridade: '',
       trunfo: false,
     });
+  };
+
+  saveCard = (cart) => {
+    const { trunfo } = this.state;
     if (trunfo === true) {
       this.setState({
         checkTrunfo: true,
       });
     }
+    this.setState((prevState) => ({ boxCart: [cart, ...prevState.boxCart] }),
+      this.clear());
   };
 
   render() {
     const { nameCart, imageCart, description, power, stamina,
-      defense, raridade, trunfo, boxCart, checkTrunfo } = this.state;
-    const { nameCartNew, imageCartNew, descriptionNew, powerNew,
-      staminaNew, defenseNew, raridadeNew, trunfoNew } = boxCart;
+      defense, raridade, trunfo, checkTrunfo, boxCart } = this.state;
     return (
       <div>
         <h1>Oi Tryunfo</h1>
         <Form
+          add={ this.addNewCard }
           onInputChange={ this.inputChange }
           isSaveButtonDisabled={ this.buttonState() }
           onSaveButtonClick={ this.saveCard }
@@ -102,6 +95,7 @@ class App extends React.Component {
           cardRare={ raridade }
           cardTrunfo={ trunfo }
           hasTrunfo={ checkTrunfo }
+          state={ this.state }
         />
         <Card
           cardName={ nameCart }
@@ -114,14 +108,7 @@ class App extends React.Component {
           cardTrunfo={ trunfo }
         />
         <CardsBox
-          newCardName={ nameCartNew }
-          newCardImage={ imageCartNew }
-          newCardDescription={ descriptionNew }
-          newCardAttr1={ powerNew }
-          newCardAttr2={ staminaNew }
-          newCardAttr3={ defenseNew }
-          newCardRare={ raridadeNew }
-          newCardTrunfo={ trunfoNew }
+          cardsData={ boxCart }
         />
       </div>
     );

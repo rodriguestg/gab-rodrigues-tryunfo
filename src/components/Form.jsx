@@ -2,10 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      nameCart: '',
+      imageCart: '',
+      description: '',
+      power: '0',
+      stamina: '0',
+      defense: '0',
+      raridade: '',
+      trunfo: false,
+    };
+  }
+
+  handleCard = (e) => {
+    e.preventDefault();
+    const { onSaveButtonClick } = this.props;
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+      cardImage, cardRare, cardTrunfo } = this.props;
+    this.setState(() => ({
+      nameCart: cardName,
+      imageCart: cardImage,
+      description: cardDescription,
+      power: cardAttr1,
+      stamina: cardAttr2,
+      defense: cardAttr3,
+      raridade: cardRare,
+      trunfo: cardTrunfo,
+    }), () => onSaveButtonClick(this.state));
+  }
+
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onSaveButtonClick, onInputChange } = this.props;
+      onInputChange } = this.props;
     const trunfoLabelRender = () => {
       const trunfo = (
         <input
@@ -22,7 +53,7 @@ class Form extends React.Component {
     };
 
     return (
-      <form>
+      <form className="form">
         <label htmlFor="nameCart">
           Nome da Carta
           <input
@@ -109,11 +140,11 @@ class Form extends React.Component {
           {trunfoLabelRender()}
         </label>
         <button
-          type="button"
+          type="submit"
           id="btn-salvar"
           data-testid="save-button"
           disabled={ isSaveButtonDisabled }
-          onClick={ onSaveButtonClick }
+          onClick={ this.handleCard }
         >
           Salvar
         </button>
